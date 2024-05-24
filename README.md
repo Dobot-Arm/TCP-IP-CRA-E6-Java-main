@@ -12,7 +12,7 @@ English version of the README -> please [click here](./README-EN.md)
 ## 2. 文件说明
 1. Demo.java: 程序运行入口。  
 
-2. Dashboard.java DobotMove.java Feedback.java ：根据机器人TCP/IP远程控制方案（https://github.com/Dobot-Arm/TCP-IP-Protocol-6AXis-V4）自行修改。
+2. Dashboard.java DobotMove.java Feedback.java ：根据机器人TCP/IP远程控制方案（ https://github.com/Dobot-Arm/TCP-IP-Protocol-6AXis-V4 ）自行修改。
 
 ## 3. 运行Demo
 1、需在IntelliJ IDEA 运行TCP-IP Java项目。  
