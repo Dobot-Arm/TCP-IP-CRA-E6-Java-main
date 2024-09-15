@@ -2,6 +2,7 @@ package com.dobot.api;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.dobot.api.ErrorInfoHelper;
 import com.dobot.api.entity.JointMovJEntity;
 import com.dobot.api.entity.MovJEntity;
 import com.dobot.api.entity.MovLEntity;
@@ -168,6 +169,84 @@ public class DobotMove {
 //        if(jointMovJEntity.AccJ != null){
 //            str.append(",AccJ=" + jointMovJEntity.AccJ);
 //        }
+        if(!sendData(str.toString())){
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000);
+    }
+
+    public String MovJ_J(JointMovJEntity jointMovJEntity){
+        if (socketClient.isClosed())
+        {
+            return "device does not connected!!!";
+        }
+        StringBuilder str = new StringBuilder();
+        str.append("MovJ(joint={"+jointMovJEntity.J1+","+jointMovJEntity.J2+","+jointMovJEntity.J3+","+jointMovJEntity.J4+","+jointMovJEntity.J5+","+jointMovJEntity.J6+"})");
+//        if(jointMovJEntity.User != null){
+//            str.append(",user =" + jointMovJEntity.User);
+//        }
+//        if(jointMovJEntity.Tool != null){
+//            str.append(",tool =" + jointMovJEntity.Tool);
+//        }
+//        if(jointMovJEntity.SpeedJ != null){
+//            str.append(",SpeedJ=" + jointMovJEntity.SpeedJ);
+//        }
+//        if(jointMovJEntity.AccJ != null){
+//            str.append(",AccJ=" + jointMovJEntity.AccJ);
+//        }
+        if(!sendData(str.toString())){
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000);
+    }
+
+    public String MovL_J(JointMovJEntity jointMovJEntity){
+        if (socketClient.isClosed())
+        {
+            return "device does not connected!!!";
+        }
+        StringBuilder str = new StringBuilder();
+        str.append("MovJ(joint={"+jointMovJEntity.J1+","+jointMovJEntity.J2+","+jointMovJEntity.J3+","+jointMovJEntity.J4+","+jointMovJEntity.J5+","+jointMovJEntity.J6+"})");
+//        if(jointMovJEntity.User != null){
+//            str.append(",user =" + jointMovJEntity.User);
+//        }
+//        if(jointMovJEntity.Tool != null){
+//            str.append(",tool =" + jointMovJEntity.Tool);
+//        }
+//        if(jointMovJEntity.SpeedJ != null){
+//            str.append(",SpeedJ=" + jointMovJEntity.SpeedJ);
+//        }
+//        if(jointMovJEntity.AccJ != null){
+//            str.append(",AccJ=" + jointMovJEntity.AccJ);
+//        }
+        if(!sendData(str.toString())){
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000);
+    }
+    public String ServoJ(JointMovJEntity jointMovJEntity,double t){
+        if (socketClient.isClosed())
+        {
+            return "device does not connected!!!";
+        }
+        StringBuilder str = new StringBuilder();
+        str.append("ServoJ("+jointMovJEntity.J1+","+jointMovJEntity.J2+","+jointMovJEntity.J3+","+jointMovJEntity.J4+","+jointMovJEntity.J5+","+jointMovJEntity.J6+","+t+")");
+        if(!sendData(str.toString())){
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000);
+    }
+
+    
+    public String ServoP(MovLEntity movLEntity,double t){
+        if (socketClient.isClosed())
+        {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        StringBuilder str = new StringBuilder();
+
+        str.append("ServoP("+movLEntity.X+","+movLEntity.Y+","+movLEntity.Z+","+movLEntity.Rx+","+movLEntity.Ry+","+movLEntity.Rz+","+t+")");
         if(!sendData(str.toString())){
             return str + SEND_ERROR;
         }
