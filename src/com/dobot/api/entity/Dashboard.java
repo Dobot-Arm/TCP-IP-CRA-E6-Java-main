@@ -672,6 +672,1660 @@ public class Dashboard {
     }
 
 
+    ///设置机械臂检测到碰撞后原路回退的距离
+    public String SetBackDistance(double distance) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetBackDistance(" + distance + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    ///设置机械臂检测到碰撞后进入的状态
+    public String SetPostCollisionMode(int mode) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetPostCollisionMode(" + mode + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    ///开启或关闭安全皮肤功能
+    public String EnableSafeSkin(int status) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "EnableSafeSkin(" + status + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    ///设置安全皮肤各个部位的灵敏度
+    public String SetSafeSkin(int part, int status) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetSafeSkin(" + part + "," + status + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    ///开启或关闭指定的安全墙
+    public String SetSafeWallEnable(int index, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetSafeWallEnable(" + index + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    ///开启或关闭指定的干涉区
+    public String SetWorkZoneEnable(int index, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetWorkZoneEnable(" + index + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCCollisionSwitch(int enable) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "FCCollisionSwitch(" + enable + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetFCCollision(double force, double torque) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetFCCollision(" + force + "," + torque + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String PositiveKin(double J1, double J2, double J3, double J4, double J5, double J6, int user, int tool) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("PositiveKin(%f,%f,%f,%f,%f,%f", J1, J2, J3, J4, J5, J6);
+        if (user != -1) {
+            str += ",user=" + user;
+        }
+        if (tool != -1) {
+            str += ",tool=" + tool;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String InverseKin(double X, double Y, double Z, double Rx, double Ry, double Rz, int user, int tool, int useJointNear, String JointNear) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("InverseKin(%f,%f,%f,%f,%f,%f", X, Y, Z, Rx, Ry, Rz);
+        if (user != -1) {
+            str += ",user=" + user;
+        }
+        if (tool != -1) {
+            str += ",tool=" + tool;
+        }
+        if (useJointNear != -1) {
+            str += ",useJointNear=" + useJointNear;
+        }
+        if (JointNear != null && !JointNear.isEmpty()) {
+            str += ",JointNear=" + JointNear;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String InverseSolution(double a1, double b1, double c1, double d1, double e1, double f1, int user, int tool, int isJoint) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("InverseSolution(pose={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1);
+        if (user != -1) {
+            str += ",user=" + user;
+        }
+        if (tool != -1) {
+            str += ",tool=" + tool;
+        }
+        if (isJoint != 0) {
+            str += ",isJoint=" + isJoint;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String DOGroup(int... args) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        StringBuilder str = new StringBuilder("DOGroup(");
+        for (int i = 0; i < args.length; i++) {
+            str.append(args[i]);
+            if (i < args.length - 1) {
+                str.append(",");
+            }
+        }
+        str.append(")");
+        if (!sendData(str.toString(), false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetDOGroup(int... args) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        StringBuilder str = new StringBuilder("GetDOGroup(");
+        for (int i = 0; i < args.length; i++) {
+            str.append(args[i]);
+            if (i < args.length - 1) {
+                str.append(",");
+            }
+        }
+        str.append(")");
+        if (!sendData(str.toString(), false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String DIGroup(int... args) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        StringBuilder str = new StringBuilder("DIGroup(");
+        for (int i = 0; i < args.length; i++) {
+            str.append(args[i]);
+            if (i < args.length - 1) {
+                str.append(",");
+            }
+        }
+        str.append(")");
+        if (!sendData(str.toString(), false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+    
+    public String ToolDOInstant(int index, int status) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ToolDOInstant(" + index + "," + status + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetTool485(int baud, String parity, int stopbit, int identify) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetTool485(" + baud;
+        if (parity != null && !parity.isEmpty()) {
+            str += "," + parity;
+        }
+        if (stopbit != -1) {
+            str += "," + stopbit;
+        }
+        if (identify != -1) {
+            str += "," + identify;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetToolPower(int status, int identify) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetToolPower(" + status;
+        if (identify != -1) {
+            str += "," + identify;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetToolMode(int mode, int type, int identify) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetToolMode(" + mode + "," + type;
+        if (identify != -1) {
+            str += "," + identify;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ModbusCreate(String ip, int port, int slave_id, int isRTU) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ModbusCreate(" + ip + "," + port + "," + slave_id;
+        if (isRTU != -1) {
+            str += "," + isRTU;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ModbusRTUCreate(int slave_id, int baud, String parity, int data_bit, int stop_bit) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ModbusRTUCreate(" + slave_id + "," + baud;
+        if (parity != null && !parity.isEmpty()) {
+            str += "," + parity;
+        }
+        if (data_bit != -1) {
+            str += "," + data_bit;
+        }
+        if (stop_bit != -1) {
+            str += "," + stop_bit;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ModbusClose(int index) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ModbusClose(" + index + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetInBits(int index, int addr, int count) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetInBits(" + index + "," + addr + "," + count + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetInRegs(int index, int addr, int count, String valType) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetInRegs(" + index + "," + addr + "," + count;
+        if (valType != null && !valType.isEmpty()) {
+            str += "," + valType;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetCoils(int index, int addr, int count) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetCoils(" + index + "," + addr + "," + count + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetCoils(int index, int addr, int count, String valTab) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetCoils(" + index + "," + addr + "," + count + "," + valTab + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetHoldRegs(int index, int addr, int count, String valType) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetHoldRegs(" + index + "," + addr + "," + count;
+        if (valType != null && !valType.isEmpty()) {
+            str += "," + valType;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetHoldRegs(int index, int addr, int count, String valTab, String valType) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetHoldRegs(" + index + "," + addr + "," + count + "," + valTab;
+        if (valType != null && !valType.isEmpty()) {
+            str += "," + valType;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String DOGroupDEC(int group, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "DOGroupDEC(" + group + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetDOGroupDEC(int group, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetDOGroupDEC(" + group + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String DIGroupDEC(int group, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "DIGroupDEC(" + group + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+    
+    public String GetInputBool(int address) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetInputBool(" + address + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetInputInt(int address) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetInputInt(" + address + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetInputFloat(int address) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetInputFloat(" + address + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetOutputBool(int address) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetOutputBool(" + address + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetOutputInt(int address) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetOutputInt(" + address + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetOutputFloat(int address) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetOutputFloat(" + address + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetOutputBool(int address, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetOutputBool(" + address + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetOutputInt(int address, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetOutputInt(" + address + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetOutputFloat(int address, int value) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetOutputFloat(" + address + "," + value + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String MovJ(double a1, double b1, double c1, double d1, double e1, double f1, int coordinateMode, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("MovJ(pose={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1);
+        } else if (coordinateMode == 1) {
+            str = String.format("MovJ(joint={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String MovL(double a1, double b1, double c1, double d1, double e1, double f1, int coordinateMode, int user, int tool, int a, int v, int speed, int cp, int r) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("MovL(pose={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1);
+        } else if (coordinateMode == 1) {
+            str = String.format("MovL(joint={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (speed != -1) str += ",speed=" + speed;
+        else if (v != -1) str += ",v=" + v;
+        if (r != -1) str += ",r=" + r;
+        else if (cp != -1) str += ",cp=" + cp;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ServoJ(double J1, double J2, double J3, double J4, double J5, double J6, double t, double aheadtime, double gain) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("ServoJ(%f,%f,%f,%f,%f,%f", J1, J2, J3, J4, J5, J6);
+        if (t != -1) str += ",t=" + t;
+        if (aheadtime != -1) str += ",aheadtime=" + aheadtime;
+        if (gain != -1) str += ",gain=" + gain;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ServoP(double X, double Y, double Z, double Rx, double Ry, double Rz, double t, double aheadtime, double gain) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("ServoP(%f,%f,%f,%f,%f,%f", X, Y, Z, Rx, Ry, Rz);
+        if (t != -1) str += ",t=" + t;
+        if (aheadtime != -1) str += ",aheadtime=" + aheadtime;
+        if (gain != -1) str += ",gain=" + gain;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String MovLIO(double a1, double b1, double c1, double d1, double e1, double f1, int coordinateMode, int Mode, int Distance, int Index, int Status, int user, int tool, int a, int v, int speed, int cp, int r) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("MovLIO(pose={%f,%f,%f,%f,%f,%f},{%d,%d,%d,%d}", a1, b1, c1, d1, e1, f1, Mode, Distance, Index, Status);
+        } else if (coordinateMode == 1) {
+            str = String.format("MovLIO(joint={%f,%f,%f,%f,%f,%f},{%d,%d,%d,%d}", a1, b1, c1, d1, e1, f1, Mode, Distance, Index, Status);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (speed != -1) str += ",speed=" + speed;
+        else if (v != -1) str += ",v=" + v;
+        if (r != -1) str += ",r=" + r;
+        else if (cp != -1) str += ",cp=" + cp;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String MovJIO(double a1, double b1, double c1, double d1, double e1, double f1, int coordinateMode, int Mode, int Distance, int Index, int Status, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("MovJIO(pose={%f,%f,%f,%f,%f,%f},{%d,%d,%d,%d}", a1, b1, c1, d1, e1, f1, Mode, Distance, Index, Status);
+        } else if (coordinateMode == 1) {
+            str = String.format("MovJIO(joint={%f,%f,%f,%f,%f,%f},{%d,%d,%d,%d}", a1, b1, c1, d1, e1, f1, Mode, Distance, Index, Status);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String Arc(double a1, double b1, double c1, double d1, double e1, double f1, double a2, double b2, double c2, double d2, double e2, double f2, int coordinateMode, int user, int tool, int a, int v, int speed, int cp, int r) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("Arc(pose={%f,%f,%f,%f,%f,%f},pose={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1, a2, b2, c2, d2, e2, f2);
+        } else if (coordinateMode == 1) {
+            str = String.format("Arc(joint={%f,%f,%f,%f,%f,%f},joint={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1, a2, b2, c2, d2, e2, f2);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (speed != -1) str += ",speed=" + speed;
+        else if (v != -1) str += ",v=" + v;
+        if (r != -1) str += ",r=" + r;
+        else if (cp != -1) str += ",cp=" + cp;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String Circle(double a1, double b1, double c1, double d1, double e1, double f1, double a2, double b2, double c2, double d2, double e2, double f2, int coordinateMode, int count, int user, int tool, int a, int v, int speed, int cp, int r) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("Circle(pose={%f,%f,%f,%f,%f,%f},pose={%f,%f,%f,%f,%f,%f},%d", a1, b1, c1, d1, e1, f1, a2, b2, c2, d2, e2, f2, count);
+        } else if (coordinateMode == 1) {
+            str = String.format("Circle(joint={%f,%f,%f,%f,%f,%f},joint={%f,%f,%f,%f,%f,%f},%d", a1, b1, c1, d1, e1, f1, a2, b2, c2, d2, e2, f2, count);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (speed != -1) str += ",speed=" + speed;
+        else if (v != -1) str += ",v=" + v;
+        if (r != -1) str += ",r=" + r;
+        else if (cp != -1) str += ",cp=" + cp;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String MoveJog(String axis_id, int coordtype, int user, int tool) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "MoveJog(" + axis_id;
+        if (coordtype != -1) str += ",coordtype=" + coordtype;
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+    
+    public String RunTo(double a1, double b1, double c1, double d1, double e1, double f1, int moveType, int user, int tool, int a, int v) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (moveType == 0) {
+            str = String.format("RunTo(pose={%f,%f,%f,%f,%f,%f},moveType=0", a1, b1, c1, d1, e1, f1);
+        } else if (moveType == 1) {
+            str = String.format("RunTo(joint={%f,%f,%f,%f,%f,%f},moveType=1", a1, b1, c1, d1, e1, f1);
+        } else {
+             return "moveType param is wrong";
+        }
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String MoveL(double a1, double b1, double c1, double d1, double e1, double f1, int user, int tool, int a, int v, int speed, int cp, int r) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("MoveL(pose={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1);
+        
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (speed != -1) str += ",speed=" + speed;
+        else if (v != -1) str += ",v=" + v;
+        if (r != -1) str += ",r=" + r;
+        else if (cp != -1) str += ",cp=" + cp;
+        
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String CheckMovJ(double j1a, double j2a, double j3a, double j4a, double j5a, double j6a, double j1b, double j2b, double j3b, double j4b, double j5b, double j6b, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("CheckMovJ(joint={%f,%f,%f,%f,%f,%f},joint={%f,%f,%f,%f,%f,%f}", j1a, j2a, j3a, j4a, j5a, j6a, j1b, j2b, j3b, j4b, j5b, j6b);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+    
+    public String CheckMovC(double j1a, double j2a, double j3a, double j4a, double j5a, double j6a, double j1b, double j2b, double j3b, double j4b, double j5b, double j6b, double j1c, double j2c, double j3c, double j4c, double j5c, double j6c, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("CheckMovC(joint={%f,%f,%f,%f,%f,%f},joint={%f,%f,%f,%f,%f,%f},joint={%f,%f,%f,%f,%f,%f}", j1a, j2a, j3a, j4a, j5a, j6a, j1b, j2b, j3b, j4b, j5b, j6b, j1c, j2c, j3c, j4c, j5c, j6c);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelMovJTool(double x, double y, double z, double rx, double ry, double rz, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelMovJTool(%f,%f,%f,%f,%f,%f", x, y, z, rx, ry, rz);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelMovLTool(double x, double y, double z, double rx, double ry, double rz, int user, int tool, int a, int v, int speed, int cp, int r) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelMovLTool(%f,%f,%f,%f,%f,%f", x, y, z, rx, ry, rz);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (speed != -1) str += ",speed=" + speed;
+        else if (v != -1) str += ",v=" + v;
+        if (r != -1) str += ",r=" + r;
+        else if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelMovJUser(double x, double y, double z, double rx, double ry, double rz, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelMovJUser(%f,%f,%f,%f,%f,%f", x, y, z, rx, ry, rz);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelMovLUser(double x, double y, double z, double rx, double ry, double rz, int user, int tool, int a, int v, int speed, int cp, int r) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelMovLUser(%f,%f,%f,%f,%f,%f", x, y, z, rx, ry, rz);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (speed != -1) str += ",speed=" + speed;
+        else if (v != -1) str += ",v=" + v;
+        if (r != -1) str += ",r=" + r;
+        else if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelJointMovJ(double offset1, double offset2, double offset3, double offset4, double offset5, double offset6, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelJointMovJ(%f,%f,%f,%f,%f,%f", offset1, offset2, offset3, offset4, offset5, offset6);
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelPointTool(int coordinateMode, double a1, double b1, double c1, double d1, double e1, double f1, double x, double y, double z, double rx, double ry, double rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("RelPointTool(pose={%f,%f,%f,%f,%f,%f},{%f,%f,%f,%f,%f,%f})", a1, b1, c1, d1, e1, f1, x, y, z, rx, ry, rz);
+        } else if (coordinateMode == 1) {
+            str = String.format("RelPointTool(joint={%f,%f,%f,%f,%f,%f},{%f,%f,%f,%f,%f,%f})", a1, b1, c1, d1, e1, f1, x, y, z, rx, ry, rz);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelPointUser(int coordinateMode, double a1, double b1, double c1, double d1, double e1, double f1, double x, double y, double z, double rx, double ry, double rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "";
+        if (coordinateMode == 0) {
+            str = String.format("RelPointUser(pose={%f,%f,%f,%f,%f,%f},{%f,%f,%f,%f,%f,%f})", a1, b1, c1, d1, e1, f1, x, y, z, rx, ry, rz);
+        } else if (coordinateMode == 1) {
+            str = String.format("RelPointUser(joint={%f,%f,%f,%f,%f,%f},{%f,%f,%f,%f,%f,%f})", a1, b1, c1, d1, e1, f1, x, y, z, rx, ry, rz);
+        } else {
+             return "coordinateMode param is wrong";
+        }
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelJoint(double j1, double j2, double j3, double j4, double j5, double j6, double offset1, double offset2, double offset3, double offset4, double offset5, double offset6) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelJoint(%f,%f,%f,%f,%f,%f,{%f,%f,%f,%f,%f,%f})", j1, j2, j3, j4, j5, j6, offset1, offset2, offset3, offset4, offset5, offset6);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelPointWeldLine(double StartX, double EndX, double Y, double Z, double WorkAngle, double TravelAngle, double p1_1, double p1_2, double p1_3, double p1_4, double p1_5, double p1_6, double p2_1, double p2_2, double p2_3, double p2_4, double p2_5, double p2_6) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelPointWeldLine(%f,%f,%f,%f,%f,%f,{%f,%f,%f,%f,%f,%f},{%f,%f,%f,%f,%f,%f})", StartX, EndX, Y, Z, WorkAngle, TravelAngle, p1_1, p1_2, p1_3, p1_4, p1_5, p1_6, p2_1, p2_2, p2_3, p2_4, p2_5, p2_6);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RelPointWeldArc(double StartX, double EndX, double Y, double Z, double WorkAngle, double TravelAngle, double p1_1, double p1_2, double p1_3, double p1_4, double p1_5, double p1_6, double p2_1, double p2_2, double p2_3, double p2_4, double p2_5, double p2_6, double p3_1, double p3_2, double p3_3, double p3_4, double p3_5, double p3_6) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("RelPointWeldArc(%f,%f,%f,%f,%f,%f,{%f,%f,%f,%f,%f,%f},{%f,%f,%f,%f,%f,%f},{%f,%f,%f,%f,%f,%f})", StartX, EndX, Y, Z, WorkAngle, TravelAngle, p1_1, p1_2, p1_3, p1_4, p1_5, p1_6, p2_1, p2_2, p2_3, p2_4, p2_5, p2_6, p3_1, p3_2, p3_3, p3_4, p3_5, p3_6);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetStartPose(String traceName) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetStartPose(" + traceName + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String StartPath(String traceName, int isConst, double multi, int user, int tool) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "StartPath(" + traceName;
+        if (isConst != -1) str += ",isConst=" + isConst;
+        if (multi != -1) str += ",multi=" + multi;
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetResumeOffset(double distance) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetResumeOffset(" + distance + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String PathRecovery() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "PathRecovery()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String PathRecoveryStop() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "PathRecoveryStop()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String PathRecoveryStatus() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "PathRecoveryStatus()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ArcTrackStart() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ArcTrackStart()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ArcTrackParams(int sampleTime, int coordinateType, double upDownCompensationMin, double upDownCompensationMax, double upDownCompensationOffset, double leftRightCompensationMin, double leftRightCompensationMax, double leftRightCompensationOffset) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("ArcTrackParams(%d,%d,%f,%f,%f,%f,%f,%f)", sampleTime, coordinateType, upDownCompensationMin, upDownCompensationMax, upDownCompensationOffset, leftRightCompensationMin, leftRightCompensationMax, leftRightCompensationOffset);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ArcTrackEnd() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ArcTrackEnd()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetArcTrackOffset(double offsetX, double offsetY, double offsetZ, double offsetRx, double offsetRy, double offsetRz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("SetArcTrackOffset({%f,%f,%f,%f,%f,%f})", offsetX, offsetY, offsetZ, offsetRx, offsetRy, offsetRz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String OffsetPara(double x, double y, double z, double rx, double ry, double rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("OffsetPara(%f,%f,%f,%f,%f,%f)", x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetTrayPoint(String trayName) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetTrayPoint(" + trayName + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String EnableFTSensor(int status) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "EnableFTSensor(" + status + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SixForceHome() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SixForceHome()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetForce(int tool) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetForce(";
+        if (tool != -1) {
+            str += tool;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ForceDriveMode(int x, int y, int z, int rx, int ry, int rz, int user) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("ForceDriveMode({%d,%d,%d,%d,%d,%d}", x, y, z, rx, ry, rz);
+        if (user != -1) {
+            str += "," + user;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ForceDriveSpeed(int speed) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ForceDriveSpeed(" + speed + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCForceMode(int x, int y, int z, int rx, int ry, int rz, int fx, int fy, int fz, int frx, int fry, int frz, int reference, int user, int tool) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCForceMode({%d,%d,%d,%d,%d,%d},{%d,%d,%d,%d,%d,%d}", x, y, z, rx, ry, rz, fx, fy, fz, frx, fry, frz);
+        if (reference != -1) str += ",reference=" + reference;
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCSetDeviation(int x, int y, int z, int rx, int ry, int rz, int controltype) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCSetDeviation({%d,%d,%d,%d,%d,%d}", x, y, z, rx, ry, rz);
+        if (controltype != -1) {
+            str += "," + controltype;
+        }
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCSetForceLimit(int x, int y, int z, int rx, int ry, int rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCSetForceLimit(%d,%d,%d,%d,%d,%d)", x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCSetMass(int x, int y, int z, int rx, int ry, int rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCSetMass(%d,%d,%d,%d,%d,%d)", x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCSetStiffness(int x, int y, int z, int rx, int ry, int rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCSetStiffness(%d,%d,%d,%d,%d,%d)", x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCSetDamping(int x, int y, int z, int rx, int ry, int rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCSetDamping(%d,%d,%d,%d,%d,%d)", x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCOff() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "FCOff()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCSetForceSpeedLimit(int x, int y, int z, int rx, int ry, int rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCSetForceSpeedLimit(%d,%d,%d,%d,%d,%d)", x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String FCSetForce(int x, int y, int z, int rx, int ry, int rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("FCSetForce(%d,%d,%d,%d,%d,%d)", x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String WeaveStart() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "WeaveStart()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String WeaveParams(int weldType, double frequency, double leftAmplitude, double rightAmplitude, int direction, int stopMode, int stopTime1, int stopTime2, int stopTime3, int stopTime4, double radius, double radian) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("WeaveParams(%d,%f,%f,%f,%d,%d,%d,%d,%d,%d,%f,%f)", weldType, frequency, leftAmplitude, rightAmplitude, direction, stopMode, stopTime1, stopTime2, stopTime3, stopTime4, radius, radian);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String WeaveEnd() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "WeaveEnd()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String WeldArcSpeedStart() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "WeldArcSpeedStart()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String WeldArcSpeed(double speed) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "WeldArcSpeed(" + speed + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String WeldArcSpeedEnd() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "WeldArcSpeedEnd()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String WeldWeaveStart(int weldType, double frequency, double leftAmplitude, double rightAmplitude, int direction, int stopMode, int stopTime1, int stopTime2, int stopTime3, int stopTime4, double radius, double radian) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("WeldWeaveStart(%d,%f,%f,%f,%d,%d,%d,%d,%d,%d,%f,%f)", weldType, frequency, leftAmplitude, rightAmplitude, direction, stopMode, stopTime1, stopTime2, stopTime3, stopTime4, radius, radian);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String CnvInit(int index, double speed, double direction, double startPos, double endPos, double maxPos, double minPos, int mode) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("CnvInit(%d,%f,%f,%f,%f,%f,%f,%d)", index, speed, direction, startPos, endPos, maxPos, minPos, mode);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String CnvMovL(double a1, double b1, double c1, double d1, double e1, double f1, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("CnvMovL(pose={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String CnvMovC(double a1, double b1, double c1, double d1, double e1, double f1, double a2, double b2, double c2, double d2, double e2, double f2, int user, int tool, int a, int v, int cp) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("CnvMovC(pose={%f,%f,%f,%f,%f,%f},pose={%f,%f,%f,%f,%f,%f}", a1, b1, c1, d1, e1, f1, a2, b2, c2, d2, e2, f2);
+        if (user != -1) str += ",user=" + user;
+        if (tool != -1) str += ",tool=" + tool;
+        if (a != -1) str += ",a=" + a;
+        if (v != -1) str += ",v=" + v;
+        if (cp != -1) str += ",cp=" + cp;
+        str += ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetCnvObject(int index) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetCnvObject(" + index + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetCnvPointOffset(int index, double x, double y, double z, double rx, double ry, double rz) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = String.format("SetCnvPointOffset(%d,{%f,%f,%f,%f,%f,%f})", index, x, y, z, rx, ry, rz);
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String SetCnvTimeCompensation(int index, double time) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "SetCnvTimeCompensation(" + index + "," + time + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String StartSyncCnv(int index, double speed, double direction) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "StartSyncCnv(" + index + "," + speed + "," + direction + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String StopSyncCnv(int index) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "StopSyncCnv(" + index + ")";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetCurrentCommandID() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetCurrentCommandID()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String LogExportUSB() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "LogExportUSB()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetExportStatus() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetExportStatus()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String RequestControl() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "RequestControl()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String GetError() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "GetError()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String ResetRobot() {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        String str = "ResetRobot()";
+        if (!sendData(str, false)) {
+            return str + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+
+    public String TcpSendAndParse(String command) {
+        if (socketClient.isClosed()) {
+            Logger.instance.log("device does not connected!!!");
+            return "device does not connected!!!";
+        }
+        if (!sendData(command, false)) {
+            return command + SEND_ERROR;
+        }
+        return waitReply(5000, false);
+    }
+    
+    public String Sleep(int ms) {
+         try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "0";
+    }
+
     public boolean sendData(String str,boolean notLog){
         try {
             if(!notLog)
